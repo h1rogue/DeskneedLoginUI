@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">DeskneedLoginUI</string>
+    <string name="welcome">welcome</string>
+    <string name="password">password</string>
+    <string name="login">login</string>
+    <string name="signup">signup</string>
+    <string name="passwords">Password</string>
+    <string name="confirm_password">confirm password</string>
+    <string name="email">Email</string>
+    <string name="phone_number">Phone Number</string>
+</resources>
