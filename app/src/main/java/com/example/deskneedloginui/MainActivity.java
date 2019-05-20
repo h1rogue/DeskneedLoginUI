@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements VvVolleyInterface
             e.printStackTrace();
         }
     }
-
+//generate Id is here
     private void generateRandomString() {
         //Random String generation
         char[] chars1 = "ABCDEF012GHIJKL345MNOPQR678STUVWXYZ9".toCharArray();
@@ -104,7 +104,6 @@ public class MainActivity extends AppCompatActivity implements VvVolleyInterface
     @Override
     public void onTaskComplete(String result) {
         Log.d("DSK_OPER", result);
-        Log.d("hello","ParseWorking");
         parseData(result);
     }
 }
