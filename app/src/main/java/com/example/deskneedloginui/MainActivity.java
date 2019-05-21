@@ -1,14 +1,17 @@
 package com.example.deskneedloginui;
 
 import android.app.Application;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -31,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements VvVolleyInterface
     private TextInputEditText phone, password;
     private Button login, signu;
     private String phone_no, pass, GEN_ID;
-
+    private ProgressDialog progressDialog;
     //Request URL
     private String URL = "http://admin.doorhopper.in/api/vdhp/account/login";
 
@@ -46,8 +49,16 @@ public class MainActivity extends AppCompatActivity implements VvVolleyInterface
         signu = findViewById(R.id.btn_link_signup);
 
         //Phone and Password String.
-        phone_no = phone.getText().toString().trim();
-        pass = password.getText().toString().trim();
+//        phone_no = phone.getText().toString().trim();
+//        pass = password.getText().toString().trim();
+
+        //Progress Dialogue
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("loading...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+
+
 
         //Generate Random Strings
         generateRandomString();
@@ -55,6 +66,15 @@ public class MainActivity extends AppCompatActivity implements VvVolleyInterface
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Check Empty fields
+
+                if(TextUtils.isEmpty(phone.getText().toString().trim()))
+                    phone.setError("this field cannot be blank");
+
+                if(TextUtils.isEmpty(password.getText().toString().trim()))
+                    password.setError("this field cannot be empty");
+
+                progressDialog.show();
                 loginOldUser();
             }
         });
@@ -72,13 +92,15 @@ public class MainActivity extends AppCompatActivity implements VvVolleyInterface
     private void parseData(String response) {
         try {
             JSONObject jsonObject = new JSONObject(response);
-           String responseres = jsonObject.getString("responseResult");
+        //   String responseres = jsonObject.getString("responseResult");
            if(jsonObject.getString("responseResult").equals("failure"))
            {
+               progressDialog.dismiss();
                Log.d("Token","Not found");
                Toast.makeText(MainActivity.this, "Invalid Phone or password", Toast.LENGTH_LONG).show();
            }else
            {
+               progressDialog.dismiss();
                Log.d("Token","found");
                ApplicationVariable.ACCOUNT_DATA.token = jsonObject.getString("token");
                Intent intent = new Intent(MainActivity.this,TabViewActivity.class);
