@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements VvVolleyInterface
            {
                Log.d("Token","found");
                ApplicationVariable.ACCOUNT_DATA.token = jsonObject.getString("token");
-               Intent intent = new Intent(MainActivity.this,SignUpActivity.class);
+               Intent intent = new Intent(MainActivity.this,TabViewActivity.class);
                startActivity(intent);
            }
         } catch (JSONException e) {
